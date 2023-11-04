@@ -24,6 +24,7 @@
 		562F902A2AF61D780081296D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56332A4C2AF6208000D2C07D /* ChatDetail */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ChatDetail; sourceTree = "<group>"; };
 		56332A4D2AF6209A00D2C07D /* ChatList */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ChatList; sourceTree = "<group>"; };
+		56702B982AF630A500437DA2 /* Util */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Util; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +43,7 @@
 		562F90102AF61D780081296D = {
 			isa = PBXGroup;
 			children = (
+				56702B972AF6305700437DA2 /* Core */,
 				562F90302AF61DAB0081296D /* Feature */,
 				562F901B2AF61D780081296D /* EmotionChatBot */,
 				562F901A2AF61D780081296D /* Products */,
@@ -83,6 +85,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		56702B972AF6305700437DA2 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				56702B982AF630A500437DA2 /* Util */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
