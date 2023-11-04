@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "ChatList",
+    platforms: [.iOS(.v13)],
     products: [
         .library(
             name: "ChatList",
@@ -23,7 +24,11 @@ let package = Package(
             url: "https://github.com/ReactiveX/RxSwift",
             .upToNextMajor(from: "6.0.0")
         ),
-//        .package(path: "./ChallengeConfirmScene")
+        .package(
+            url: "https://github.com/SnapKit/SnapKit",
+            .upToNextMajor(from: "5.0.0")
+        ),
+        .package(path: "./Util")
     ],
     targets: [
         
@@ -33,6 +38,8 @@ let package = Package(
                 .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "RxCocoa", package: "RxSwift"),
                 .product(name: "RxRelay", package: "RxSwift"),
+                .product(name: "SnapKit", package: "SnapKit"),
+                .product(name: "Util", package: "Util")
             ]),
         .testTarget(
             name: "ChatListTests",
