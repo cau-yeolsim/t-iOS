@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ChatList
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -19,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         self.window?.makeKeyAndVisible()
         
-        let vc = ViewController()
+        let vc = ChatListViewController()
         let navigationController = UINavigationController(rootViewController: vc)
         self.window?.rootViewController = navigationController
         
