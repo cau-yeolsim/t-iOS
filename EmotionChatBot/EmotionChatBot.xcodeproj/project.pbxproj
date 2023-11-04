@@ -9,16 +9,16 @@
 /* Begin PBXBuildFile section */
 		562F901D2AF61D780081296D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F901C2AF61D780081296D /* AppDelegate.swift */; };
 		562F901F2AF61D780081296D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F901E2AF61D780081296D /* SceneDelegate.swift */; };
-		562F90212AF61D780081296D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562F90202AF61D780081296D /* ViewController.swift */; };
 		562F90262AF61D780081296D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 562F90252AF61D780081296D /* Assets.xcassets */; };
 		562F90292AF61D780081296D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 562F90272AF61D780081296D /* LaunchScreen.storyboard */; };
+		56332A7C2AF62B2500D2C07D /* ChatDetail in Frameworks */ = {isa = PBXBuildFile; productRef = 56332A7B2AF62B2500D2C07D /* ChatDetail */; };
+		56332A7E2AF62B2500D2C07D /* ChatList in Frameworks */ = {isa = PBXBuildFile; productRef = 56332A7D2AF62B2500D2C07D /* ChatList */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		562F90192AF61D780081296D /* EmotionChatBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmotionChatBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		562F901C2AF61D780081296D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		562F901E2AF61D780081296D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		562F90202AF61D780081296D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		562F90252AF61D780081296D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		562F90282AF61D780081296D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		562F902A2AF61D780081296D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,6 +31,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56332A7E2AF62B2500D2C07D /* ChatList in Frameworks */,
+				56332A7C2AF62B2500D2C07D /* ChatDetail in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +45,7 @@
 				562F90302AF61DAB0081296D /* Feature */,
 				562F901B2AF61D780081296D /* EmotionChatBot */,
 				562F901A2AF61D780081296D /* Products */,
+				56332A7A2AF62B2500D2C07D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,7 +62,6 @@
 			children = (
 				562F901C2AF61D780081296D /* AppDelegate.swift */,
 				562F901E2AF61D780081296D /* SceneDelegate.swift */,
-				562F90202AF61D780081296D /* ViewController.swift */,
 				562F90252AF61D780081296D /* Assets.xcassets */,
 				562F90272AF61D780081296D /* LaunchScreen.storyboard */,
 				562F902A2AF61D780081296D /* Info.plist */,
@@ -74,6 +76,13 @@
 				56332A4C2AF6208000D2C07D /* ChatDetail */,
 			);
 			path = Feature;
+			sourceTree = "<group>";
+		};
+		56332A7A2AF62B2500D2C07D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -92,6 +101,10 @@
 			dependencies = (
 			);
 			name = EmotionChatBot;
+			packageProductDependencies = (
+				56332A7B2AF62B2500D2C07D /* ChatDetail */,
+				56332A7D2AF62B2500D2C07D /* ChatList */,
+			);
 			productName = EmotionChatBot;
 			productReference = 562F90192AF61D780081296D /* EmotionChatBot.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +133,8 @@
 				Base,
 			);
 			mainGroup = 562F90102AF61D780081296D;
+			packageReferences = (
+			);
 			productRefGroup = 562F901A2AF61D780081296D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,7 +161,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				562F90212AF61D780081296D /* ViewController.swift in Sources */,
 				562F901D2AF61D780081296D /* AppDelegate.swift in Sources */,
 				562F901F2AF61D780081296D /* SceneDelegate.swift in Sources */,
 			);
@@ -356,6 +370,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		56332A7B2AF62B2500D2C07D /* ChatDetail */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatDetail;
+		};
+		56332A7D2AF62B2500D2C07D /* ChatList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatList;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 562F90112AF61D780081296D /* Project object */;
 }
