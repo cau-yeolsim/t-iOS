@@ -23,7 +23,12 @@ final class ChatListViewModelSpec: QuickSpec {
         var output : ChatListViewModel.Output!
         
         beforeEach {
-            viewModel = ChatListViewModel()
+            let router = MockChatRouter()
+            let repository = MockChatRepository()
+            viewModel = ChatListViewModel(
+                routing: router,
+                chatRepository: repository
+            )
             viewDidLoad = PublishRelay<Void>()
             itemSelected = PublishRelay<Int>()
             
