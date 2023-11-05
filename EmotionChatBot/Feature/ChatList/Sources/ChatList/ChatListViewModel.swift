@@ -19,28 +19,46 @@ public final class ChatListViewModel: ViewModelType {
     }
     
     public struct Output {
-        let chatList: Observable<[Chat]>
+        let chatList: Observable<[ChatRoom]>
     }
 
     // MARK: - Properties
     
     public var disposeBag = DisposeBag()
     
+    private let chatRepository: ChatRepository
+    private weak var routing: ChatRouting?
+    
     // MARK: - Initializers
     
-    public init() {
-        
+    // TODO: routing 이름 바꾸기
+    public init(routing: ChatRouting,
+                chatRepository: ChatRepository)
+    {
+        self.chatRepository = chatRepository
+        self.routing = routing
     }
     
     // MARK: - Methods
     
-    
     public func transform(input: Input) -> Output {
         
-        
         let chatList = input.viewDidLoad
-            .map { [Chat]() }
+            .withUnretained(self)
+            .flatMap({ owner, _ in
+                owner.chatRepository.fetchChatRoomList()
+            })
             .asObservable()
+        
+        input.itemSelected
+            .withLatestFrom(chatList) { index, chatList in
+                chatList[index]
+            }
+            .withUnretained(self)
+            .subscribe(onNext: { owner, chat in
+                owner.routing?.showChatDetail(chatID: chat.chatRoomId)
+            })
+            .disposed(by: disposeBag)
         
         let output = Output(chatList: chatList)
         return output
