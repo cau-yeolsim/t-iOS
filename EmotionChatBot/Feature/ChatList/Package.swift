@@ -13,19 +13,15 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/Quick/Nimble",
-            .upToNextMajor(from: "12.0.0")
-        ),
-        .package(
-            url: "https://github.com/Quick/Quick",
-            .upToNextMajor(from: "6.0.0")
-        ),
-        .package(
             url: "https://github.com/ReactiveX/RxSwift",
             .upToNextMajor(from: "6.0.0")
         ),
         .package(
             url: "https://github.com/SnapKit/SnapKit",
+            .upToNextMajor(from: "5.0.0")
+        ),
+        .package(
+            url: "https://github.com/RxSwiftCommunity/RxNimble",
             .upToNextMajor(from: "5.0.0")
         ),
         .package(path: "./Util")
@@ -45,8 +41,9 @@ let package = Package(
             name: "ChatListTests",
             dependencies: [
                 "ChatList",
-                .product(name: "Nimble", package: "Nimble"),
-                .product(name: "Quick", package: "Quick"),
+                .product(name: "RxTest", package: "RxSwift"),
+                .product(name: "RxBlocking", package: "RxSwift"),
+                .product(name: "RxNimble", package: "RxNimble"),
             ]),
     ]
 )
