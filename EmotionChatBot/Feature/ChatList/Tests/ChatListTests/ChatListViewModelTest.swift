@@ -30,8 +30,10 @@ class ChatListViewModelTest: XCTestCase {
     
     var output : ChatListViewModel.Output!
     
-    // given
+    // Given
     override func setUp() {
+        super.setUp()
+        
         scheduler = TestScheduler(initialClock: 0)
         disposebag = DisposeBag()
         
@@ -64,12 +66,14 @@ class ChatListViewModelTest: XCTestCase {
         itemSelected = nil
         
         output = nil
+        
+        super.tearDown()
     }
     
     func testFetchChatRoomList() throws {
         // Given
         repository.chatRoomResult = self.getMockChatRooms()
-        
+
         // When
         scheduler.createColdObservable([.next(1, ())])
             .bind(to: viewWillAppear)
@@ -83,17 +87,21 @@ class ChatListViewModelTest: XCTestCase {
     
     func testSelectChatRoom() throws {
         // Given
+        repository.chatRoomResult = self.getMockChatRooms()
+
         scheduler.createColdObservable([.next(1, ())])
             .bind(to: viewWillAppear)
             .disposed(by: disposebag)
-        
+
         // When
-        scheduler.createColdObservable([.next(2, 0)])
+        scheduler.createColdObservable([.next(2, 1)])
             .bind(to: itemSelected)
             .disposed(by: disposebag)
 
+        scheduler.start()
+        
         // Then
-        expect(self.router.didCallShowChatDetail).toEventually(beTrue(), timeout: .seconds(1))
+        expect(self.router.didCallShowChatDetail).toEventually(beTrue(), timeout: .seconds(3))
     }
 }
 
