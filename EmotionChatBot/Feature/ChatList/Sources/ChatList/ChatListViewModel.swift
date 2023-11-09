@@ -8,13 +8,14 @@
 import Foundation
 
 import RxSwift
+import RxCocoa
 
 import Util
 
 public final class ChatListViewModel: ViewModelType {
     
     public struct Input {
-        let viewDidLoad: Observable<Void>
+        let viewWillAppear: Observable<Void>
         let itemSelected: Observable<Int>
     }
     
@@ -31,10 +32,10 @@ public final class ChatListViewModel: ViewModelType {
     
     // MARK: - Initializers
     
-    // TODO: routing 이름 바꾸기
-    public init(routing: ChatRouting,
-                chatRepository: ChatRepository)
-    {
+    public init(
+        routing: ChatRouting,
+        chatRepository: ChatRepository
+    ){
         self.chatRepository = chatRepository
         self.routing = routing
     }
@@ -42,14 +43,14 @@ public final class ChatListViewModel: ViewModelType {
     // MARK: - Methods
     
     public func transform(input: Input) -> Output {
-        
-        let chatList = input.viewDidLoad
+        print(#function)
+        let chatList = input.viewWillAppear
             .withUnretained(self)
             .flatMap({ owner, _ in
                 owner.chatRepository.fetchChatRoomList()
             })
-            .asObservable()
-        
+            .share()
+
         input.itemSelected
             .withLatestFrom(chatList) { index, chatList in
                 chatList[index]
@@ -59,12 +60,8 @@ public final class ChatListViewModel: ViewModelType {
                 owner.routing?.showChatDetail(chatID: chat.chatRoomId)
             })
             .disposed(by: disposeBag)
-        
+
         let output = Output(chatList: chatList)
         return output
     }
-    
-    
-    
-    
 }
