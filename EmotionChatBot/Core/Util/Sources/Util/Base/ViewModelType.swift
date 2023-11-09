@@ -7,9 +7,6 @@
 
 import RxSwift
 
-import Combine
-
-@MainActor
 public protocol ViewModelType: AnyObject {
     
     associatedtype Input
@@ -17,7 +14,6 @@ public protocol ViewModelType: AnyObject {
     
     // MARK: - Properties
     var disposeBag: DisposeBag { get }
-//    var cancellable: Set<AnyCancellable> { get }
     
     // MARK: - Methods
     func transform(input: Input) -> Output
