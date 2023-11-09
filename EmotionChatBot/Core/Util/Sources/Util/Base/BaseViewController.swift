@@ -10,10 +10,10 @@ import UIKit
 import RxSwift
 import SnapKit
 
-public class BaseViewController: UIViewController {
+open class BaseViewController: UIViewController {
     
     // MARK: - Properties
-    var disposeBag = DisposeBag()
+    public var disposeBag = DisposeBag()
     
     private var indicator: UIActivityIndicatorView?
     
@@ -29,17 +29,17 @@ public class BaseViewController: UIViewController {
         bind()
     }
     
-    func configureHierarchy() {}
-    func configureConstraints() {}
-    func configureAttributes() {}
-    func bind() {}
+    open func configureHierarchy() {}
+    open func configureConstraints() {}
+    open func configureAttributes() {}
+    open func bind() {}
     
     @available(*, unavailable)
-    required init(coder: NSCoder) {
+    required public init(coder: NSCoder) {
         fatalError("init(coder:) is called.")
     }
     
-    init() {
+    public init() {
         super.init(nibName: nil, bundle: nil)
     }
 }
