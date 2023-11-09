@@ -12,19 +12,22 @@ import ChatList
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var chatCoordinator: ChatCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         self.window = UIWindow(windowScene: windowScene)
+        
+        let navigationController = UINavigationController()
+        
+        chatCoordinator = ChatCoordinator(navigationController)
+        
+        window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
-        let vc = ChatListViewController()
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.window?.rootViewController = navigationController
-        
+        chatCoordinator?.showChatRoomList(userID: "1")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
