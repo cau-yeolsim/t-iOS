@@ -24,8 +24,17 @@ final class MockChatRepository: ChatRepository {
         return .just(self.chatRoomResult)
     }
     
-    func fetchChatDetail(chatId: String) -> Observable<[Chat]> {
+    func fetchChatDetail(chatId: Int) -> Observable<[Chat]> {
         return .just(chatDetailResult)
     }
+    
+    func createChatRoom() -> Observable<ChatList.ChatRoom> {
+        return .just(chatRoomResult.first!)
+    }
+    
+    func createChatDetail(chatId: Int, message: String) -> RxSwift.Observable<ChatList.Chat> {
+        return .just(chatDetailResult.first!)
+    }
+
 }
 

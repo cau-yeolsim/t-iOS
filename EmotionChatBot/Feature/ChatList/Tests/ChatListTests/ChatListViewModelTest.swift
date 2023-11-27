@@ -73,12 +73,12 @@ class ChatListViewModelTest: XCTestCase {
     func testFetchChatRoomList() throws {
         // Given
         repository.chatRoomResult = self.getMockChatRooms()
-
+        
         // When
         scheduler.createColdObservable([.next(1, ())])
             .bind(to: viewWillAppear)
             .disposed(by: disposebag)
-
+        
         // Then
         expect(self.output.chatList.map{ $0.count })
             .events(scheduler: scheduler, disposeBag: disposebag)
@@ -88,16 +88,16 @@ class ChatListViewModelTest: XCTestCase {
     func testSelectChatRoom() throws {
         // Given
         repository.chatRoomResult = self.getMockChatRooms()
-
+        
         scheduler.createColdObservable([.next(1, ())])
             .bind(to: viewWillAppear)
             .disposed(by: disposebag)
-
+        
         // When
         scheduler.createColdObservable([.next(2, 1)])
             .bind(to: itemSelected)
             .disposed(by: disposebag)
-
+        
         scheduler.start()
         
         // Then
@@ -109,42 +109,58 @@ extension ChatListViewModelTest {
     private func getMockChats() -> [Chat] {
         return [
             Chat(
-                chatID: "1",
-                message: "hi",
-                isMyMessage: true
+                chatID: 1,
+                message: "안녕",
+                createdAt: "2021-10-10",
+                createdBy: "김찬수",
+                chatroomID: 1
             ),
             Chat(
-                chatID: "2",
-                message: "hihi",
-                isMyMessage: false
+                chatID: 2,
+                message: "안녕하세요",
+                createdAt: "2021-10-10",
+                createdBy: "김찬수",
+                chatroomID: 1
             ),
             Chat(
-                chatID: "3",
-                message: "hihihi",
-                isMyMessage: true
-            )
+                chatID: 3,
+                message: "안녕하세요?",
+                createdAt: "2021-10-10",
+                createdBy: "김찬수",
+                chatroomID: 1
+            ),
         ]
     }
     
     private func getMockChatRooms() -> [ChatRoom] {
         return [
             ChatRoom(
-                chatRoomId: "1",
+                chatRoomId: 1,
                 previewImgString: "",
-                previewMessage: "안녕하세요?",
-                nickname: "김찬수"
+                title: "티로 1",
+                createdAt: "2021-10-10",
+                lastMessage:
+                    Chat(
+                        chatID: 3,
+                        message: "안녕하세요?",
+                        createdAt: "2021-10-10",
+                        createdBy: "김찬수",
+                        chatroomID: 1
+                    )
             ),
             ChatRoom(
-                chatRoomId: "2",
+                chatRoomId: 2,
                 previewImgString: "",
-                previewMessage: "안녕하세요?222",
-                nickname: "문상헌"
+                title: "티로 2",
+                createdAt: "2021-10-10",
+                lastMessage: nil
             ),
             ChatRoom(
-                chatRoomId: "3",
+                chatRoomId: 3,
                 previewImgString: "",
-                previewMessage: "안녕하세요??333",
-                nickname: "양석환"
+                title: "티로 3",
+                createdAt: "2021-10-10",
+                lastMessage: nil
             ),
         ]
     }

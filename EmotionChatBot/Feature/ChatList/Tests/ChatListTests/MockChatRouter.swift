@@ -15,11 +15,11 @@ final class MockChatRouter: ChatRouting {
     var didCallShowChatRoomList = false
     var didChatDetailFinished = false
     
-    func showChatRoomList(userID: String) {
+    func showChatRoomList() {
         self.didCallShowChatRoomList = true
     }
     
-    func showChatDetail(chatID: String) {
+    func showChatDetail(chatID: Int) {
         self.didCallShowChatDetail = true
     }
     
