@@ -16,6 +16,10 @@ let package = Package(
             url: "https://github.com/ReactiveX/RxSwift",
             .upToNextMajor(from: "6.0.0")
         ),
+        .package(
+            url: "https://github.com/Alamofire/Alamofire",
+            .upToNextMajor(from: "5.0.0")
+        ),
     ],
     targets: [
         .target(
@@ -23,6 +27,7 @@ let package = Package(
             dependencies: [
                 .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "RxCocoa", package: "RxSwift"),
+                .product(name: "Alamofire", package: "Alamofire")
             ]),
         .testTarget(
             name: "UtilTests",
