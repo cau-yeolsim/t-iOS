@@ -12,5 +12,7 @@ import RxSwift
 public protocol ChatRepository {
     
     func fetchChatRoomList() -> Observable<[ChatRoom]>
-    func fetchChatDetail(chatId: String) -> Observable<[Chat]>
+    func createChatRoom() -> Observable<ChatRoom>
+    func fetchChatDetail(chatId: Int) -> Observable<[Chat]>
+    func createChatDetail(chatId: Int, message: String) -> Observable<Chat>
 }

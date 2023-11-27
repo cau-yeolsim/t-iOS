@@ -57,6 +57,7 @@ public final class ChatListViewModel: ViewModelType {
             }
             .withUnretained(self)
             .subscribe(onNext: { owner, chat in
+                print(chat, "selected")
                 owner.routing?.showChatDetail(chatID: chat.chatRoomId)
             })
             .disposed(by: disposeBag)
