@@ -7,14 +7,11 @@ let package = Package(
     name: "ChatDetail",
     platforms: [.iOS(.v13)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "ChatDetail",
             targets: ["ChatDetail"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
         .package(
             url: "https://github.com/ReactiveX/RxSwift",
             .upToNextMajor(from: "6.0.0")
@@ -57,6 +54,7 @@ let package = Package(
                 .product(name: "RxTest", package: "RxSwift"),
                 .product(name: "RxBlocking", package: "RxSwift"),
                 .product(name: "RxNimble", package: "RxNimble"),
+                .product(name: "ChatList", package: "ChatList")
             ]),
     ]
 )
