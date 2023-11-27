@@ -24,6 +24,10 @@ let package = Package(
             url: "https://github.com/RxSwiftCommunity/RxNimble",
             .upToNextMajor(from: "5.0.0")
         ),
+        .package(
+            url: "https://github.com/onevcat/Kingfisher",
+            .upToNextMajor(from: "7.0.0")
+        ),
         .package(path: "./Util")
     ],
     targets: [
@@ -35,6 +39,7 @@ let package = Package(
                 .product(name: "RxCocoa", package: "RxSwift"),
                 .product(name: "RxRelay", package: "RxSwift"),
                 .product(name: "SnapKit", package: "SnapKit"),
+                .product(name: "Kingfisher", package: "Kingfisher"),
                 .product(name: "Util", package: "Util")
             ]),
         .testTarget(
