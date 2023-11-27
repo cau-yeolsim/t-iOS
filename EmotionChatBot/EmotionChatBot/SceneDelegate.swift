@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
         
-        chatCoordinator?.showChatRoomList(userID: "1")
+        chatCoordinator?.showChatRoomList()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
