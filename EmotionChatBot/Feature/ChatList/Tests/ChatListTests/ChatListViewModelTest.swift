@@ -27,6 +27,7 @@ class ChatListViewModelTest: XCTestCase {
     
     var viewWillAppear: PublishSubject<Void>!
     var itemSelected: PublishSubject<Int>!
+    var createChatRoomButtonTapped: PublishSubject<Void>!
     
     var output : ChatListViewModel.Output!
     
@@ -45,10 +46,12 @@ class ChatListViewModelTest: XCTestCase {
         )
         viewWillAppear = PublishSubject<Void>()
         itemSelected = PublishSubject<Int>()
+        createChatRoomButtonTapped = PublishSubject<Void>()
         
         let input = ChatListViewModel.Input(
             viewWillAppear: viewWillAppear.asObservable(),
-            itemSelected: itemSelected.asObservable()
+            itemSelected: itemSelected.asObservable(),
+            createChatRoomButtonTapped: createChatRoomButtonTapped.asObservable()
         )
         
         output = viewModel.transform(input: input)
@@ -102,6 +105,26 @@ class ChatListViewModelTest: XCTestCase {
         
         // Then
         expect(self.router.didCallShowChatDetail).toEventually(beTrue(), timeout: .seconds(3))
+    }
+    
+    func testMakeNewChatRool() throws {
+        // Given
+        repository.chatRoomResult = self.getMockChatRooms()
+        
+        scheduler.createColdObservable([.next(1, ())])
+            .bind(to: viewWillAppear)
+            .disposed(by: disposebag)
+        
+        // When
+        scheduler.createColdObservable([.next(2, ())])
+            .bind(to: self.createChatRoomButtonTapped)
+            .disposed(by: disposebag)
+        
+        // Then
+        expect(self.output.chatList.map{ $0.count })
+            .events(scheduler: scheduler, disposeBag: disposebag)
+            .to(equal([.next(1, self.getMockChatRooms().count),
+                       .next(2, self.getMockChatRooms().count)]))
     }
 }
 
