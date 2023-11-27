@@ -58,7 +58,8 @@ public final class ChatListViewController: BaseViewController, UIScrollViewDeleg
     public override func bind() {
         let input = ChatListViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.asObservable(),
-            itemSelected: self.chatPreviewsTableView.rx.itemSelected.map(\.row).asObservable()
+            itemSelected: self.chatPreviewsTableView.rx.itemSelected.map(\.row).asObservable(),
+            createChatRoomButtonTapped: self.navigationItem.rightBarButtonItem!.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input)
@@ -115,5 +116,9 @@ private extension ChatListViewController {
     func configureNavigationController() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "채팅"
+        
+        // 새로운 채팅방 생성 버튼 추가
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        self.navigationItem.rightBarButtonItem = addButton
     }
 }

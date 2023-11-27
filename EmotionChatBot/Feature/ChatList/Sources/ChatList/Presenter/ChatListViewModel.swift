@@ -17,6 +17,7 @@ public final class ChatListViewModel: ViewModelType {
     public struct Input {
         let viewWillAppear: Observable<Void>
         let itemSelected: Observable<Int>
+        let createChatRoomButtonTapped: Observable<Void>
     }
     
     public struct Output {
@@ -43,16 +44,29 @@ public final class ChatListViewModel: ViewModelType {
     // MARK: - Methods
     
     public func transform(input: Input) -> Output {
-        print(#function)
+//        print(#function)
+        let chatListSubject = PublishSubject<[ChatRoom]>()
+        
         let chatList = input.viewWillAppear
             .withUnretained(self)
             .flatMap({ owner, _ in
                 owner.chatRepository.fetchChatRoomList()
             })
-            .share()
+            .bind(to: chatListSubject)
+
+        input.createChatRoomButtonTapped
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.chatRepository.createChatRoom()
+            }
+            .withUnretained(self)
+            .flatMapLatest { owner, _ in
+                owner.chatRepository.fetchChatRoomList()
+            }
+            .bind(to: chatListSubject)
 
         input.itemSelected
-            .withLatestFrom(chatList) { index, chatList in
+            .withLatestFrom(chatListSubject) { index, chatList in
                 chatList[index]
             }
             .withUnretained(self)
@@ -62,7 +76,8 @@ public final class ChatListViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
 
-        let output = Output(chatList: chatList)
+        let output = Output(chatList: chatListSubject.asObserver())
         return output
     }
+
 }
