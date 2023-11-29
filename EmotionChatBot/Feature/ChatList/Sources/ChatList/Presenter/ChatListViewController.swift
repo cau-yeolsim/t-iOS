@@ -119,6 +119,8 @@ private extension ChatListViewController {
         
         // 새로운 채팅방 생성 버튼 추가
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        addButton.tintColor = .black
+        
         self.navigationItem.rightBarButtonItem = addButton
     }
 }

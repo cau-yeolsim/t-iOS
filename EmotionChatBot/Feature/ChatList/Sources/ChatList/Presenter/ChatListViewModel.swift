@@ -12,6 +12,14 @@ import RxCocoa
 
 import Util
 
+
+public protocol ChatRouting: AnyObject {
+    func showChatRoomList()
+    func showChatDetail(chatroom: ChatRoom)
+    func didFinishChatDetail()
+}
+
+
 public final class ChatListViewModel: ViewModelType {
     
     public struct Input {
@@ -47,12 +55,13 @@ public final class ChatListViewModel: ViewModelType {
 //        print(#function)
         let chatListSubject = PublishSubject<[ChatRoom]>()
         
-        let chatList = input.viewWillAppear
+        input.viewWillAppear
             .withUnretained(self)
             .flatMap({ owner, _ in
                 owner.chatRepository.fetchChatRoomList()
             })
             .bind(to: chatListSubject)
+            .disposed(by: disposeBag)
 
         input.createChatRoomButtonTapped
             .withUnretained(self)
@@ -64,15 +73,15 @@ public final class ChatListViewModel: ViewModelType {
                 owner.chatRepository.fetchChatRoomList()
             }
             .bind(to: chatListSubject)
+            .disposed(by: disposeBag)
 
         input.itemSelected
             .withLatestFrom(chatListSubject) { index, chatList in
                 chatList[index]
             }
             .withUnretained(self)
-            .subscribe(onNext: { owner, chat in
-                print(chat, "selected")
-                owner.routing?.showChatDetail(chatID: chat.chatRoomId)
+            .subscribe(onNext: { owner, chatroom in
+                owner.routing?.showChatDetail(chatroom: chatroom)
             })
             .disposed(by: disposeBag)
 
