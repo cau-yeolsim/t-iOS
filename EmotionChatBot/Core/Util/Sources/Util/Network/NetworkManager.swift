@@ -14,17 +14,28 @@ public final class NetworkManager {
     
     public static let shared = NetworkManager()
     
+    private let session: Session = {
+        let configuration = URLSessionConfiguration.af.default
+        let apiLogger = APIEventLogger()
+        return Session(configuration: configuration, eventMonitors: [apiLogger])
+    }()
+    
+    private let headers: HTTPHeaders = [
+        "accept": "application/json",
+        "Content-Type": "application/json"
+    ]
+    
     private init() {}
     
     public func request<T: Decodable>(url: URLConvertible,
                                  method: HTTPMethod = .get,
                                  parameters: Parameters? = nil,
-                                 encoding: ParameterEncoding = URLEncoding.default,
+                                 encoding: ParameterEncoding = JSONEncoding.default,
                                  headers: HTTPHeaders? = nil,
                                  interceptor: RequestInterceptor? = nil,
                                  requestModifier: Session.RequestModifier? = nil,
                                  completion: @escaping (Result<T, Error>) -> Void) {
-        AF.request(url,
+        session.request(url,
                  method: method,
                  parameters: parameters,
                  encoding: encoding,
@@ -50,8 +61,8 @@ public final class NetworkManager {
                                  headers: HTTPHeaders? = nil,
                                  interceptor: RequestInterceptor? = nil,
                                  requestModifier: Session.RequestModifier? = nil) -> Observable<T> {
-        return Observable.create { observer in
-            AF.request(url,
+        return Observable.create { [unowned self] observer in
+            self.session.request(url,
                      method: method,
                      parameters: parameters,
                      encoding: encoding,
