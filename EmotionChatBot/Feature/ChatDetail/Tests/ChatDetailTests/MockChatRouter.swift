@@ -19,7 +19,7 @@ public final class MockChatRouter: ChatRouting {
         self.didCallShowChatRoomList = true
     }
     
-    public func showChatDetail(chatID: Int) {
+    public func showChatDetail(chatroom: ChatRoom) {
         self.didCallShowChatDetail = true
     }
     

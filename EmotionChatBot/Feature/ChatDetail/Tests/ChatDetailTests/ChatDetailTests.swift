@@ -45,7 +45,14 @@ final class ChatDetailViewModelTests: XCTestCase {
         repository = MockChatRepository()
         viewModel = ChatDetailViewModel(
             routing: router,
-            chatRepository: repository
+            chatRepository: repository,
+            chatroom: ChatRoom(
+                chatRoomId: 1,
+                previewImgString: "",
+                title: "티로1",
+                createdAt: "2023",
+                lastMessage: nil
+            )
         )
 
         viewWillAppear = PublishSubject<Void>()
@@ -132,21 +139,24 @@ extension ChatDetailViewModelTests {
                 message: "안녕",
                 createdAt: "2021-10-10",
                 createdBy: "김찬수",
-                chatroomID: 1
+                chatroomID: 1,
+                isComplete: true
             ),
             Chat(
                 chatID: 2,
                 message: "안녕하세요",
                 createdAt: "2021-10-10",
                 createdBy: "김찬수",
-                chatroomID: 1
+                chatroomID: 1,
+                isComplete: true
             ),
             Chat(
                 chatID: 3,
                 message: "안녕하세요?",
                 createdAt: "2021-10-10",
                 createdBy: "김찬수",
-                chatroomID: 1
+                chatroomID: 1,
+                isComplete: true
             ),
         ]
     }
@@ -164,7 +174,8 @@ extension ChatDetailViewModelTests {
                         message: "안녕하세요?",
                         createdAt: "2021-10-10",
                         createdBy: "김찬수",
-                        chatroomID: 1
+                        chatroomID: 1,
+                        isComplete: true
                     )
             ),
             ChatRoom(
