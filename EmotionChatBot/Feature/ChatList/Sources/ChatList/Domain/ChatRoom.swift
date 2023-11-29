@@ -8,11 +8,11 @@
 import Foundation
 
 public struct ChatRoom: Codable {
-    let chatRoomId: Int
-    let previewImgString: String?
-    let title: String
-    let createdAt: String
-    let lastMessage: Chat?
+    public let chatRoomId: Int
+    public let previewImgString: String?
+    public let title: String
+    public let createdAt: String
+    public let lastMessage: Chat?
     
     enum CodingKeys: String, CodingKey {
         case chatRoomId = "id"

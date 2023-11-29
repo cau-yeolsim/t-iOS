@@ -9,11 +9,12 @@ import Foundation
 
 public struct Chat: Codable {
     
-    let chatID: Int
-    let message: String
-    let createdAt: String
-    let createdBy: String
-    let chatroomID: Int
+    public let chatID: Int
+    public let message: String
+    public let createdAt: String
+    public let createdBy: String
+    public let chatroomID: Int
+    public let isComplete: Bool
     
     enum CodingKeys: String, CodingKey {
         case chatID = "id"
@@ -21,6 +22,7 @@ public struct Chat: Codable {
         case createdAt = "created_at"
         case createdBy = "created_by"
         case chatroomID = "chat_id"
+        case isComplete = "is_complete"
     }
     
     public init(
@@ -28,12 +30,25 @@ public struct Chat: Codable {
         message: String,
         createdAt: String,
         createdBy: String,
-        chatroomID: Int
+        chatroomID: Int,
+        isComplete: Bool
     ) {
         self.chatID = chatID
         self.message = message
         self.createdAt = createdAt
         self.createdBy = createdBy
         self.chatroomID = chatroomID
+        self.isComplete = isComplete
+    }
+}
+
+extension Chat: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(chatID)
+    }
+    
+    public static func == (lhs: Chat, rhs: Chat) -> Bool {
+        return lhs.chatID == rhs.chatID
     }
 }
