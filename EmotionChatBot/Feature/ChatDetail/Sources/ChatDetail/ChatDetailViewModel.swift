@@ -62,39 +62,36 @@ public final class ChatDetailViewModel: ViewModelType {
             .bind(to: chatListSubject)
             .disposed(by: disposeBag)
         
-        let lastChatSubject = PublishSubject<Chat>()
+        
+        chatListSubject
+            .compactMap { $0.first }
+            .filter{ !$0.isComplete }
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
+            .withUnretained(self)
+            .flatMap { owner, _ in
+                owner.chatRepository.fetchChatList(chatroomId: owner.chatroom.chatRoomId)
+            }
+            .bind(to: chatListSubject)
+            .disposed(by: disposeBag)
         
         input.sendChatText
             .withUnretained(self)
             .flatMap { owner, text in
                 owner.chatRepository.createChatDetail(chatId: owner.chatroom.chatRoomId, message: text)
             }
-            .bind(to: lastChatSubject)
-            .disposed(by: disposeBag)
-        
-        lastChatSubject
-            .filter { !$0.isComplete }
+            .delay(.seconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
-            .flatMap { owner, _ -> Observable<[Chat]> in
+            .flatMap { owner, _ in
                 owner.chatRepository.fetchChatList(chatroomId: owner.chatroom.chatRoomId)
             }
             .bind(to: chatListSubject)
             .disposed(by: disposeBag)
         
-        lastChatSubject
-            .filter { !$0.isComplete }
-            .delay(.seconds(1), scheduler: MainScheduler.instance)
-            .withUnretained(self)
-            .flatMap { owner, chat in
-                owner.chatRepository.fetchChatDetail(chatID: chat.chatID)
-            }
-            .bind(to: lastChatSubject)
-            .disposed(by: disposeBag)
         
         return Output(
             currentChatRoom: .just(self.chatroom),
             chatList: chatListSubject.map { $0.reversed() }.asObservable(),
-            lastChat: lastChatSubject.asObservable(),
+            lastChat: .never(),
             isLoading: Observable.never()
         )
     }
