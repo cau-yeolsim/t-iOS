@@ -89,6 +89,7 @@ public final class ChatDetailViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.currentChatRoom
+            .subscribe(on: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { owner, chatroom in
                 owner.title = chatroom.title
@@ -96,17 +97,19 @@ public final class ChatDetailViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.chatList
+            .subscribe(on: MainScheduler.instance)
             .map { self.generateSnapshot($0) }
             .subscribe(onNext: { [weak self] snapshot in
                 self?.dataSource?.apply(snapshot, animatingDifferences: false) {
                     self?.scrollToBottom()
+//                    self?.chatTableView.setNeedsLayout()
                 }
             })
             .disposed(by: disposeBag)
         
         
     }
-
+    
     // MARK: - Methods
 
     private func scrollToBottom() {
@@ -114,7 +117,7 @@ public final class ChatDetailViewController: BaseViewController {
         let lastChatIndex = self.chatTableView.numberOfRows(inSection: 0) - 1
         if lastChatIndex == -1 { return }
         let lastIndexPath = IndexPath(row: lastChatIndex, section: 0)
-
+        self.chatTableView.reloadData()
         self.chatTableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: true)
     }
 }
@@ -171,6 +174,7 @@ extension ChatDetailViewController {
             cell.configureCell(by: item, hasMyChatBefore: hasMyChatBefore) {
                 guard var snapshot = self.dataSource?.snapshot() else { return }
                 snapshot.reloadItems([item])
+                self.view.setNeedsLayout()
             }
     
             
