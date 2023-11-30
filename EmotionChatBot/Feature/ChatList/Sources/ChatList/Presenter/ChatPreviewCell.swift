@@ -78,8 +78,17 @@ final class ChatPreviewCell: BaseTableViewCell {
         
         chatPreviewLabel.snp.makeConstraints { make in
             make.leading.equalTo(self.nicknameLabel.snp.leading)
+            make.trailing.equalToSuperview().offset(-70)
             make.bottom.equalToSuperview().offset(-(padding + 2))
         }
+        
+        // 모서리 둥글게
+//        contentView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview().inset(7)
+//        }
+//        self.contentView.layer.cornerRadius = 20
+//        self.contentView.layer.masksToBounds = true
+//        self.contentView.backgroundColor = .cyan
     }
 }
 

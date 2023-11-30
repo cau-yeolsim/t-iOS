@@ -90,27 +90,10 @@ public final class ChatDetailViewModel: ViewModelType {
             }
             .bind(to: lastChatSubject)
             .disposed(by: disposeBag)
-//        lastChatSubject
-//            .filter { !$0.isComplete }
-//            .withUnretained(self)
-//            .flatMap { owner, _ -> Observable<[Chat]> in
-//                owner.chatRepository.fetchChatList(chatroomId: owner.chatroom.chatRoomId)
-//            }
-//            .withUnretained(self)
-//            .flatMap { owner, chatList -> Observable<Chat> in
-//                guard let lastChat = chatList.last else {
-//                    return Observable.just(Chat()) // 또는 적절한 기본값 반환
-//                }
-//                return owner.chatRepository.fetchChatDetail(chatID: lastChat.chatID)
-//                    .delay(.seconds(1), scheduler: MainScheduler.instance)
-//            }
-//            .bind(to: lastChatSubject)
-//            .disposed(by: disposeBag)
-
         
         return Output(
             currentChatRoom: .just(self.chatroom),
-            chatList: chatListSubject.map { $0.reversed() }.asObservable().share(),
+            chatList: chatListSubject.map { $0.reversed() }.asObservable(),
             lastChat: lastChatSubject.asObservable(),
             isLoading: Observable.never()
         )
